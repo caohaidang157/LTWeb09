@@ -1,0 +1,77 @@
+﻿@model LTWeb09_Bai1.Models.KhachHang
+@{
+    ViewBag.Title = "Đăng ký tài khoản";
+}
+
+<h2 class="mb-3">Đăng ký tài khoản</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label for="HoTen" class="form-label">Họ tên</label>
+        @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", placeholder = "Nhập họ tên..." })
+    </div>
+
+    <div class="mb-3">
+        <label for="TaiKhoan" class="form-label">Tên đăng nhập <span class="text-danger">*</span></label>
+        @Html.TextBoxFor(m => m.TaiKhoan, new
+        {
+            @class = "form-control",
+            placeholder = "Nhập tên đăng nhập...",
+            required = "required"
+        })
+    </div>
+
+    <div class="mb-3">
+        <label for="MatKhau" class="form-label">Mật khẩu</label>
+        @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Nhập mật khẩu..." })
+    </div>
+
+    <div class="mb-3">
+        <label for="Email" class="form-label">Email <span class="text-danger">*</span></label>
+        @Html.TextBoxFor(m => m.Email, new
+        {
+            @class = "form-control",
+            type = "email",
+            placeholder = "Nhập email...",
+            required = "required"
+        })
+    </div>
+
+    <div class="mb-3">
+        <label for="DiaChi" class="form-label">Địa chỉ</label>
+        @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control", placeholder = "Nhập địa chỉ..." })
+    </div>
+
+    <div class="mb-3">
+        <label for="DienThoai" class="form-label">Điện thoại</label>
+        @Html.TextBoxFor(m => m.DienThoai, new { @class = "form-control", placeholder = "Nhập số điện thoại..." })
+    </div>
+
+    <div class="mb-3">
+        <label for="GioiTinh" class="form-label">Giới tính</label>
+        <select name="GioiTinh" class="form-select" required>
+            <option value="">-- Chọn giới tính --</option>
+            <option value="Nam" @(Model != null && Model.GioiTinh == "Nam" ? "selected" : "")>Nam</option>
+            <option value="Nữ" @(Model != null && Model.GioiTinh == "Nữ" ? "selected" : "")>Nữ</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="NgaySinh" class="form-label">Ngày sinh</label>
+        @Html.TextBoxFor(m => m.NgaySinh, "{0:yyyy-MM-dd}", new
+        {
+            @class = "form-control",
+            type = "date"
+        })
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Đăng ký</button>
+}
+
+@if (ViewBag.ThongBao != null)
+{
+    <p class="text-danger mt-3">@ViewBag.ThongBao</p>
+}

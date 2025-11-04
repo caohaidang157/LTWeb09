@@ -1,0 +1,15 @@
+﻿@model List<LTWeb09_Bai1.Models.NhaXuatBan>
+<link href="~/Content/sidebar.css" / rel="stylesheet">
+<div class="sidebar">
+    <h4>📋 Danh sách nhà xuất bản</h4>
+    <ul class="dept-list">
+        @foreach (var dept in Model)
+        {
+            <li>
+                <a href="@Url.Action("HTSachTheoNXB", "NhaXuatBan", new { id = dept.MaNXB })">
+                    @dept.TenNXB
+                </a>
+            </li>
+        }
+    </ul>
+</div>
