@@ -1,0 +1,76 @@
+﻿<hr />
+@model LTWeb09_Bai1.Models.Sach
+<div style="display:flex">
+    <div>
+        <img src="~/Content/images/@Model.AnhBia"
+             style="width:300px;height:350px;object-fit:cover;border-radius:8px;" />
+    </div>
+    <div>
+        <p>Tên sách: @Model.TenSach</p>
+        <p>Mô tả: @Model.MoTa</p>
+        <p>Giá bán: @Model.GiaBan</p>
+        <p>Các tác giả</p>
+        @if (Model.ThamGIas != null && Model.ThamGIas.Any())
+        {
+            <ul>
+                @foreach (var tg in Model.ThamGIas)
+                {
+                    <li>
+                        @tg.TacGia.TenTacGia
+                        @if (!string.IsNullOrEmpty(tg.VaiTro))
+                        {
+                            <span style="color: gray;">(@tg.VaiTro)</span>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p><em>Chưa có thông tin tác giả.</em></p>
+        }
+    </div>
+</div>
+<h4>Sách cùng chủ đề:</h4>
+@if (ViewBag.SachCungChuDe != null && ViewBag.SachCungChuDe.Count > 0)
+{
+    <div style="display:flex; gap:20px; flex-wrap:wrap;">
+        @foreach (var s in ViewBag.SachCungChuDe)
+        {
+            <div style="width:180px; text-align:center;">
+                <a href="@Url.Action("Details", "Sach", new { id = s.MaSach })">
+                    <img src="~/Content/images/@s.AnhBia"
+                         style="width:150px;height:200px;object-fit:cover;border-radius:8px;" />
+                    <div>@s.TenSach</div>
+                </a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p><em>Không có sách cùng chủ đề.</em></p>
+}
+
+<hr />
+
+<h4>Sách cùng nhà xuất bản:</h4>
+@if (ViewBag.SachCungNXB != null && ViewBag.SachCungNXB.Count > 0)
+{
+    <div style="display:flex; gap:20px; flex-wrap:wrap;">
+        @foreach (var s in ViewBag.SachCungNXB)
+        {
+            <div style="width:180px; text-align:center;">
+                <a href="@Url.Action("Details", "Sach", new { id = s.MaSach })">
+                    <img src="~/Content/images/@s.AnhBia"
+                         style="width:150px;height:200px;object-fit:cover;border-radius:8px;" />
+                    <div>@s.TenSach</div>
+                </a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p><em>Không có sách cùng nhà xuất bản.</em></p>
+}

@@ -1,0 +1,60 @@
+﻿@model List<LTWeb09_Bai1.Models.Sach>
+@{
+    ViewBag.Title = "Tìm kiếm sách";
+}
+
+<h2 class="text-center mb-3">Tìm kiếm sách</h2>
+
+<form method="get" action="@Url.Action("TimKiem", "Home")" style="margin-bottom:20px;">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <input type="text" name="tenSach" placeholder="Nhập tên sách..." value="@Request["tenSach"]"
+               class="form-control" style="width:200px;" />
+
+        @Html.DropDownList("maChuDe", new SelectList(ViewBag.MaChuDe, "Value", "Text"),
+            "Chọn chủ đề", new { @class = "form-control", style = "width:200px;" })
+
+        <div class="mb-3">
+            <label class="form-label">Chọn mức giá</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="gia" value="0-10000" id="gia1" />
+                <label class="form-check-label" for="gia1">0 - 10.000</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="gia" value="11000-20000" id="gia2" />
+                <label class="form-check-label" for="gia2">11.000 - 20.000</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="gia" value="21000-40000" id="gia3" />
+                <label class="form-check-label" for="gia3">21.000 - 40.000</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="gia" value="40000+" id="gia4" />
+                <label class="form-check-label" for="gia4">Lớn hơn 40.000</label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    </div>
+</form>
+
+<hr />
+
+@if (!Model.Any())
+{
+    <p>Không tìm thấy sách nào phù hợp.</p>
+}
+else
+{
+    <div style="display:flex;flex-wrap:wrap;gap:20px;">
+        @foreach (var s in Model)
+        {
+            <div style="border:1px solid #ccc;padding:10px;width:200px;text-align:center;border-radius:8px;">
+                <img src="~/Content/images/@s.AnhBia"
+                     style="width:150px;height:180px;object-fit:cover;border-radius:5px;" />
+                <p><strong>@s.TenSach</strong></p>
+                <p>Giá: @string.Format("{0:N0}", s.GiaBan) đ</p>
+                <a href="@Url.Action("Details", "Home", new { id = s.MaSach })" class="btn btn-sm btn-success">Xem</a>
+            </div>
+        }
+    </div>
+}
